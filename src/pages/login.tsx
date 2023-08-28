@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useLogin } from "../hooks";
 import { createSession } from "../services";
-import { useNavigate } from "react-router-dom";
 
 type LoginFormFields = {
   email: string;
@@ -45,6 +46,7 @@ export const Login: FC = () => {
         <div>
           <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             name="email"
             value={formData.email}
@@ -54,6 +56,7 @@ export const Login: FC = () => {
         <div>
           <label htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
             name="password"
             value={formData.password}
