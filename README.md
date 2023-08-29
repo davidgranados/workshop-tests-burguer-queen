@@ -87,7 +87,7 @@ import { App } from "../App";
 jest.mock('../services/auth-service.ts')
 
 describe("App", () => {
-  it("should should be a teapot", () => {
+  it("should be a teapot", () => {
     expect(1).toBe(1);
   });
 
@@ -103,3 +103,4 @@ describe("App", () => {
 });
 
 ```
+
