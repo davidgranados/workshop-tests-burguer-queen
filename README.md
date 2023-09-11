@@ -95,3 +95,24 @@ describe("Examples", () => {
 });
 ```
 
+## Paso 2 - CSS
+
+### 1: Crear archivo
+
+Crea una carpeta llamada `__mocks__` dentro de `src` y crea un archivo llamado `file-mock.cjs` con lo siguiente
+
+```
+module.exports = "";
+```
+
+Esto es necesario porque vite sabe leer y procesar archivos de css pero jest los intenta leer y procesar como si fueran archivos de js
+
+
+### 2: Configurar Jest
+
+Agrega la siguiente sección de configuración al archivo `jest.config.cjs``
+```
+moduleNameMapper: {
+  "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
+},
+```
