@@ -26,6 +26,7 @@ Crea un archivo llamado jest.config.cjs en la raíz de tu proyecto y pega el sig
 
 ```
 module.exports = {
+  roots: ["<rootDir>/src"],
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.(ts|js|tsx|jsx)$": "@swc/jest",
