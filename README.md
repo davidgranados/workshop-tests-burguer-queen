@@ -16,8 +16,6 @@ Bibliotecas que serán instalada:
 - jest
 - @types/jest
 - jest-environment-jsdom
-- @testing-library/dom
-- @testing-library/jest-dom
 - @testing-library/react
 - @swc/jest
 
@@ -28,6 +26,7 @@ Crea un archivo llamado jest.config.cjs en la raíz de tu proyecto y pega el sig
 
 ```
 module.exports = {
+  roots: ["<rootDir>/src"],
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.(ts|js|tsx|jsx)$": "@swc/jest",
@@ -84,22 +83,14 @@ Crea un archivo en /src/__tests__/example.test.tsx con el siguiente contenido:
 import { render, screen } from "@testing-library/react";
 
 import { Home } from "../pages/home";
-import { App } from "../App";
 
-jest.mock('../services/auth-service.ts')
-
-describe("App", () => {
+describe("Examples", () => {
   it("should be a teapot", () => {
     expect(1).toBe(1);
   });
 
   it("should render Home", () => {
     render(<Home />);
-    screen.debug();
-  });
-
-  it("should render App", () => {
-    render(<App />);
     screen.debug();
   });
 });
