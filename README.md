@@ -127,3 +127,45 @@ moduleNameMapper: {
   "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
 },
 ```
+
+## Paso 3 - CSS Modules
+
+### 1: Prueba de ejemplo
+
+Crea la siguiente prueba de ejemplo dentro de la carpeta `src/pages/login` en un archivo llamado `login.test.tsx`
+
+```
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+
+import { Login } from "./login";
+
+it("should render the login page", () => {
+  render(<Login />, {wrapper: BrowserRouter})
+
+  screen.debug();
+});
+```
+
+### 2: Instalar biblioteca
+
+Instala como dependencia de desarrollo la biblioteca `identity-obj-proxy`
+
+```
+npm install --save-dev identity-obj-proxy
+```
+
+Esta biblioteca nos sirve para mockear los css modules
+
+
+## 3: Configurar Jest
+
+Actualiza la sección `moduleNameMapper` en el archivo de configuración de jest`jest.config.cjs``
+```
+moduleNameMapper: {
+  "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+  "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
+},
+```
+
+El orden de las propiedades es importante, el mapper de css modules debe estar primero sino estos archivos serán mockeados por el mapper de css/file-mock
