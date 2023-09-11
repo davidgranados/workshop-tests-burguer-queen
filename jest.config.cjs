@@ -6,4 +6,7 @@ module.exports = {
   transformIgnorePatterns: [
     "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
   ],
+  moduleNameMapper: {
+    "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
+  },
 };
