@@ -16,8 +16,6 @@ Bibliotecas que serán instalada:
 - jest
 - @types/jest
 - jest-environment-jsdom
-- @testing-library/dom
-- @testing-library/jest-dom
 - @testing-library/react
 - @swc/jest
 
@@ -28,6 +26,7 @@ Crea un archivo llamado jest.config.cjs en la raíz de tu proyecto y pega el sig
 
 ```
 module.exports = {
+  roots: ["<rootDir>/src"],
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.(ts|js|tsx|jsx)$": "@swc/jest",
@@ -84,22 +83,14 @@ Crea un archivo en /src/__tests__/example.test.tsx con el siguiente contenido:
 import { render, screen } from "@testing-library/react";
 
 import { Home } from "../pages/home";
-import { App } from "../App";
 
-jest.mock('../services/auth-service.ts')
-
-describe("App", () => {
+describe("Examples", () => {
   it("should be a teapot", () => {
     expect(1).toBe(1);
   });
 
   it("should render Home", () => {
     render(<Home />);
-    screen.debug();
-  });
-
-  it("should render App", () => {
-    render(<App />);
     screen.debug();
   });
 });
@@ -127,3 +118,45 @@ moduleNameMapper: {
   "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
 },
 ```
+
+## Paso 3 - CSS Modules
+
+### 1: Prueba de ejemplo
+
+Crea la siguiente prueba de ejemplo dentro de la carpeta `src/pages/login` en un archivo llamado `login.test.tsx`
+
+```
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+
+import { Login } from "./login";
+
+it("should render the login page", () => {
+  render(<Login />, {wrapper: BrowserRouter})
+
+  screen.debug();
+});
+```
+
+### 2: Instalar biblioteca
+
+Instala como dependencia de desarrollo la biblioteca `identity-obj-proxy`
+
+```
+npm install --save-dev identity-obj-proxy
+```
+
+Esta biblioteca nos sirve para mockear los css modules
+
+
+## 3: Configurar Jest
+
+Actualiza la sección `moduleNameMapper` en el archivo de configuración de jest`jest.config.cjs``
+```
+moduleNameMapper: {
+  "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+  "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
+},
+```
+
+El orden de las propiedades es importante, el mapper de css modules debe estar primero sino estos archivos serán mockeados por el mapper de css/file-mock
