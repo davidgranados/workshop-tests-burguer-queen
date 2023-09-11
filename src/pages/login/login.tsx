@@ -1,7 +1,9 @@
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useLogin } from "../hooks";
+import { useLogin } from "../../hooks";
+
+import styles from "./login.module.css";
 
 type LoginFormFields = {
   email: string;
@@ -39,7 +41,7 @@ export const Login: FC = () => {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1 className={styles["title"]}>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
