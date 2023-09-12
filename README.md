@@ -160,3 +160,45 @@ moduleNameMapper: {
 ```
 
 El orden de las propiedades es importante, el mapper de css modules debe estar primero sino estos archivos serán mockeados por el mapper de css/file-mock
+
+## Paso 4 - Imágenes
+
+### 1: Prueba de ejemplo
+
+Mueve la prueba de home que tenemos en `example.test.tsx` a su propio archivo cerca del componente `home.tsx`
+
+El resultado debe ser el siguiente
+
+src/__tests__/example.test.tsx
+```
+describe("Example", () => {
+  it("should should be a teapot", () => {
+    expect(1).toBe(1);
+  });
+});
+```
+
+src/pages/home/home.test.tsx
+```
+import { render, screen } from "@testing-library/react";
+
+import { Home } from "./home";
+
+describe("Home", () => {
+  it("should render Home", () => {
+    render(<Home />);
+    screen.debug();
+  });
+});
+```
+### 2: Configurar Jest
+
+Modifica la siguiente propiedad en la sección `moduleNameMapper` de configuración de jest
+```
+moduleNameMapper: {
+  ...
+  "^.+\\.(css|png|jpg|jpeg)$": "<rootDir>/src/__mocks__/file-mock.cjs",
+},
+```
+
+Este cambio hará que no solo los archivos con extensión `.css` sean mockeados con nuestro `file-mock.csj` sino que ahora también serán mockeados los archivos con las extensiones `.png`, `.jpg` y `.jpeg`
