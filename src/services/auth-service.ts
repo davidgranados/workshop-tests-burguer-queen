@@ -1,6 +1,13 @@
 import { LoginService, Session, User } from "../models";
 import { API_URL } from "../settings";
 
+class ApiError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 const TOKEN_LOCAL_STORAGE_KEY = "token";
 const USER_LOCAL_STORAGE_KEY = "user";
 
@@ -37,6 +44,11 @@ export const loginService: LoginService = async (
     },
     body: JSON.stringify({ email, password }),
   });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new ApiError(errorMessage);
+  }
 
   const { accessToken, user } = await response.json();
 
