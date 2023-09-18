@@ -35,6 +35,7 @@ export const Login: FC = () => {
         onSuccess: () => {
           navigate("/");
         },
+        // onError: console.error, // Ver error en consola
       },
     });
   };
@@ -42,10 +43,11 @@ export const Login: FC = () => {
   return (
     <div>
       <h1 className={styles["title"]}>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="login_form">
         <div>
           <label htmlFor="email">Email</label>
           <input
+            data-testid="login_form_email_input"
             id="email"
             type="email"
             name="email"
@@ -56,6 +58,7 @@ export const Login: FC = () => {
         <div>
           <label htmlFor="password">Password</label>
           <input
+            data-testid="login_form_password_input"
             id="password"
             type="password"
             name="password"
@@ -63,11 +66,15 @@ export const Login: FC = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" disabled={loginStatus === "loading"}>
+        <button
+          data-testid="login_form_submit_button"
+          type="submit"
+          disabled={loginStatus === "loading"}
+        >
           Login
         </button>
       </form>
-      {loginStatus === "error" && <p>Invalid credentials</p>}
+      {loginStatus === "error" && <p data-testid="login_form_error_message">Invalid credentials</p>}
     </div>
   );
 };
